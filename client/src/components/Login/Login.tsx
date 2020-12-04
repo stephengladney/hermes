@@ -1,7 +1,10 @@
 import React from "react"
 import { HeroText, LoginContainer, Subtitle } from "./styles"
+import { useHistory } from "react-router-dom"
 
 export function Login() {
+  const history = useHistory()
+  history.push("/login")
   return (
     <LoginContainer>
       <HeroText>Say hello to Hermes.</HeroText>
