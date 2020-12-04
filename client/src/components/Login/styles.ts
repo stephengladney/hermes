@@ -21,6 +21,11 @@ export const HeroText = styled.h1`
 `
 
 export const Subtitle = styled.h2`
-  font-size: 30px;
+  font-size: 20px;
   font-weight: normal;
+`
+
+export const StyledLink = styled.a`
+  display: block;
+  margin-top: 40px;
 `
