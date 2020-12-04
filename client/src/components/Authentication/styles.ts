@@ -20,5 +20,5 @@ const FadeBlink = keyframes`
 `
 
 export const Petasos = styled.img.attrs(_ => ({ src: "hat.png" }))`
-  animation: ${FadeBlink} 2s infinite alternate ease-out;
+  animation: ${FadeBlink} 2s ease-out;
 `

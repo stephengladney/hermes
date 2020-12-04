@@ -5,7 +5,7 @@ export function Authentication() {
   return (
     <Container>
       <Petasos />
-      <MessageText>Redirecting back to Hermes...</MessageText>
+      <MessageText>Your Slack is now connected.</MessageText>
     </Container>
   )
 }
