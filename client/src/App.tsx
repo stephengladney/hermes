@@ -3,10 +3,10 @@ import { Login } from "./components/Login/Login"
 import { Logout } from "./components/Logout/Logout"
 import { Dashboard } from "./components/Dashboard/Dashboard"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-import { useCookie, useToggle } from "react-use"
+import { useAsync, useCookie, useToggle } from "react-use"
 
 function App() {
-  const [token, _, deleteCookie] = useCookie("hermes_token")
+  const [token, , deleteCookie] = useCookie("hermes_token")
   const [isLoggedIn, toggleIsLoggedIn] = useToggle(true)
   const [isLoading, toggleIsLoading] = useToggle(false)
 
@@ -17,7 +17,7 @@ function App() {
         toggleIsLoading(false)
       }, 2000)
     }
-  })
+  }, [toggleIsLoading, token])
 
   return (
     <Router>
