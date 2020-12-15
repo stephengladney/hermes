@@ -7,7 +7,7 @@ import { useAsync, useCookie, useToggle } from "react-use"
 
 function App() {
   const [token, , deleteCookie] = useCookie("hermes_token")
-  const [isLoggedIn, toggleIsLoggedIn] = useToggle(true)
+  const [isLoggedIn, toggleIsLoggedIn] = useToggle(false)
   const [isLoading, toggleIsLoading] = useToggle(false)
 
   useEffect(() => {
