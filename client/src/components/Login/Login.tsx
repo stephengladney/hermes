@@ -20,11 +20,7 @@ export function Login() {
           <div>in-flight via Slack.</div>
         </Subtitle>
         <StyledLink href="https://slack.com/oauth/v2/authorize?user_scope=identity.basic&client_id=2338296191.759603806980">
-          <StyledButton>Sign up with Slack</StyledButton>
-          {/* <img
-            alt="Sign in with Slack"
-            src="https://api.slack.com/img/sign_in_with_slack.png"
-          /> */}
+          <StyledButton>Sign Up with Slack</StyledButton>
         </StyledLink>
       </LoginContainer>
     </BodyWrapper>
