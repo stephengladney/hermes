@@ -1,6 +1,7 @@
 import { createRoutes } from "./handlers"
 import Team from "../../models/team"
 import { Handler, handleError } from "./handlers"
+import { validateIdFormat } from "../../lib/validators"
 
 const create: Handler = async (req, res) => {
   try {
@@ -23,6 +24,7 @@ const index: Handler = async (_, res) => {
 
 const show: Handler = async (req, res) => {
   try {
+    validateIdFormat(req)
     const team = await Team.findOne({ where: { id: req.params.id } })
     if (!team) throw `team with id ${req.params.id} not found`
     res.status(200).send(team)
@@ -45,6 +47,7 @@ const update: Handler = async (req, res) => {
 
 const deleteFn: Handler = async (req, res) => {
   try {
+    validateIdFormat(req)
     await Team.destroy({ where: { id: req.params.id } })
     res.status(200).send()
   } catch (err) {

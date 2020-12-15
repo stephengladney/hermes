@@ -1,9 +1,14 @@
 import { createRoutes } from "./handlers"
 import Person from "../../models/person"
 import { Handler, handleError } from "./handlers"
+import {
+  validateIdFormat,
+  validatePersonCreateFields,
+} from "../../lib/validators"
 
 const create: Handler = async (req, res) => {
   try {
+    validatePersonCreateFields(req)
     const person = await Person.create(req.query)
     res.status(201).send(person)
   } catch (err) {
@@ -22,6 +27,7 @@ const index: Handler = async (req, res) => {
 
 const show: Handler = async (req, res) => {
   try {
+    validateIdFormat(req)
     const person = await Person.findOne({ where: { id: req.params.id } })
     if (!person) throw `person with id ${req.params.id} not found`
     res.status(200).send(person)
@@ -44,6 +50,7 @@ const update: Handler = async (req, res) => {
 
 const deleteFn: Handler = async (req, res) => {
   try {
+    validateIdFormat(req)
     await Person.destroy({ where: { id: req.params.id } })
     res.status(200).send()
   } catch (err) {

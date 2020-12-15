@@ -3,14 +3,15 @@ import Person from "../../models/person"
 import Team from "../../models/team"
 import TeamRole from "../../models/team_role"
 import { Handler, handleError } from "./handlers"
+import { validateIdFormat } from "../../lib/validators"
 
 const create: Handler = async (req, res) => {
   try {
-    //Validate ids are supplied
+    //Validate numerical ids are supplied
     const person_id = Number(req.query.person_id)
     const team_id = Number(req.query.team_id)
-    if (!person_id) throw `person id not supplied`
-    if (!team_id) throw `team id not supplied`
+    if (isNaN(person_id)) throw `invalid person id supplied`
+    if (isNaN(team_id)) throw `invalid team id supplied`
 
     //Validate person and team exist
     const person = await Person.findOne({ where: { id: person_id } })
@@ -45,6 +46,7 @@ const index: Handler = async (_, res) => {
 
 const show: Handler = async (req, res) => {
   try {
+    validateIdFormat(req)
     const teamRole = await TeamRole.findOne({ where: { id: req.params.id } })
     if (!teamRole) throw `team_role with id ${req.params.id} not found`
     res.status(200).send(teamRole)
@@ -68,6 +70,7 @@ const update: Handler = async (req, res) => {
 
 const deleteFn: Handler = async (req, res) => {
   try {
+    validateIdFormat(req)
     await TeamRole.destroy({ where: { id: req.params.id } })
     res.status(200).send()
   } catch (err) {
