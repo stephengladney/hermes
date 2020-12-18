@@ -99,6 +99,11 @@ Person.init(
       unique: true,
       allowNull: false,
     },
+    slack_token: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: true,
+    },
   },
   { sequelize, modelName: "person" }
 )
