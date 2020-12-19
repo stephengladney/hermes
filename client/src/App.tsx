@@ -1,47 +1,52 @@
-import React, { Fragment, useEffect } from "react"
-import { Login } from "./components/Login/Login"
-import { Logout } from "./components/Logout/Logout"
-import { Dashboard } from "./components/Dashboard/Dashboard"
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import React, { useEffect } from "react"
 import { useAsync, useCookie, useToggle } from "react-use"
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Switch,
+  Route,
+} from "react-router-dom"
+import { RouteHandler } from "./components/RouteHandler/RouteHandler"
+import { Login } from "./components/Login/Login"
+import { AuthSuccess } from "./components/Auth/AuthSuccess"
+import { AuthProvider } from "./contexts/authContext"
+import { Dashboard } from "./components/Dashboard/Dashboard"
 
 function App() {
-  const [token, , deleteCookie] = useCookie("hermes_token")
+  const [token, _, deleteCookie] = useCookie("hermes_token")
   const [isLoggedIn, toggleIsLoggedIn] = useToggle(false)
-  const [isLoading, toggleIsLoading] = useToggle(false)
+  const [isLoading, toggleIsLoading] = useToggle(true)
+
+  const logOut = () => {
+    deleteCookie()
+    toggleIsLoggedIn(false)
+  }
 
   useEffect(() => {
-    if (token) {
-      toggleIsLoading(true)
-      setTimeout(() => {
-        toggleIsLoading(false)
-      }, 2000)
-    }
-  }, [toggleIsLoading, token])
+    setTimeout(() => {
+      toggleIsLoading(false)
+    }, 1000)
+  }, [])
 
   return (
     <Router>
-      {isLoading ? (
-        <h1 style={{ marginTop: 400, textAlign: "center" }}>
-          (Checking token's autenticity)
-        </h1>
-      ) : (
-        <Fragment>
-          {isLoggedIn && (
-            <Switch>
-              <Route path="/logout">
-                <Logout
-                  deleteCookie={deleteCookie}
-                  toggleIsLoggedIn={toggleIsLoggedIn}
-                />
-              </Route>
-              <Route path="/">
-                <Dashboard />
-              </Route>
-            </Switch>
-          )}
-          {!isLoggedIn && <Login />}
-        </Fragment>
+      {isLoading && <h1>Loading...</h1>}
+      {!isLoading && !isLoggedIn && (
+        <Switch>
+          <Route path="/auth_success" component={AuthSuccess} />
+          <Route path="/login" component={Login} />
+          <Route path="/">
+            <Redirect to="/login" />
+          </Route>
+        </Switch>
+      )}
+      {!isLoading && isLoggedIn && (
+        <Switch>
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/">
+            <Redirect to="/dashboard" />
+          </Route>
+        </Switch>
       )}
     </Router>
   )

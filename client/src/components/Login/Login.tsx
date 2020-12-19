@@ -7,10 +7,10 @@ import {
   StyledLink,
   Subtitle,
 } from "./styles"
-import { useHistory } from "react-router-dom"
+// import { useHistory } from "react-router-dom"
 
 export function Login() {
-  useHistory().push("/login")
+  // useHistory().push("/login")
   return (
     <BodyWrapper>
       <LoginContainer>
