@@ -6,7 +6,6 @@ import {
   Switch,
   Route,
 } from "react-router-dom"
-import { RouteHandler } from "./components/RouteHandler/RouteHandler"
 import { Login } from "./components/Login/Login"
 import { AuthSuccess } from "./components/Auth/AuthSuccess"
 import { AuthProvider } from "./contexts/authContext"
@@ -28,10 +27,11 @@ function App() {
     }, 1000)
   }, [])
 
-  return (
+  return isLoading ? (
+    <h1>Loading...</h1>
+  ) : (
     <Router>
-      {isLoading && <h1>Loading...</h1>}
-      {!isLoading && !isLoggedIn && (
+      {!isLoggedIn && (
         <Switch>
           <Route path="/auth_success" component={AuthSuccess} />
           <Route path="/login" component={Login} />
@@ -40,13 +40,15 @@ function App() {
           </Route>
         </Switch>
       )}
-      {!isLoading && isLoggedIn && (
-        <Switch>
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/">
-            <Redirect to="/dashboard" />
-          </Route>
-        </Switch>
+      {isLoggedIn && (
+        <AuthProvider value={{ logOut }}>
+          <Switch>
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/">
+              <Redirect to="/dashboard" />
+            </Route>
+          </Switch>
+        </AuthProvider>
       )}
     </Router>
   )
