@@ -1,49 +1,30 @@
-import React, { Fragment, useEffect } from "react"
-import { Login } from "./components/Login/Login"
-import { Logout } from "./components/Logout/Logout"
-import { Dashboard } from "./components/Dashboard/Dashboard"
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import React, { useEffect } from "react"
 import { useAsync, useCookie, useToggle } from "react-use"
+import { Dashboard } from "./components/Dashboard/Dashboard"
+import { Loading } from "./components/Loading/Loading"
+import { RouteHandler } from "./components/RouteHandler/RouteHandler"
+import { AuthProvider } from "./contexts/authContext"
 
 function App() {
-  const [token, , deleteCookie] = useCookie("hermes_token")
+  const [token, _, deleteCookie] = useCookie("hermes_token")
   const [isLoggedIn, toggleIsLoggedIn] = useToggle(false)
-  const [isLoading, toggleIsLoading] = useToggle(false)
+  const [isLoading, toggleIsLoading] = useToggle(true)
 
-  useEffect(() => {
-    if (token) {
-      toggleIsLoading(true)
-      setTimeout(() => {
-        toggleIsLoading(false)
-      }, 2000)
-    }
-  }, [toggleIsLoading, token])
+  const logOut = () => {
+    deleteCookie()
+    toggleIsLoggedIn(false)
+  }
+
+  useAsync(async () => {
+    setTimeout(() => {
+      toggleIsLoading(false)
+    }, 1000)
+  }, [])
 
   return (
-    <Router>
-      {isLoading ? (
-        <h1 style={{ marginTop: 400, textAlign: "center" }}>
-          (Checking token's autenticity)
-        </h1>
-      ) : (
-        <Fragment>
-          {isLoggedIn && (
-            <Switch>
-              <Route path="/logout">
-                <Logout
-                  deleteCookie={deleteCookie}
-                  toggleIsLoggedIn={toggleIsLoggedIn}
-                />
-              </Route>
-              <Route path="/">
-                <Dashboard />
-              </Route>
-            </Switch>
-          )}
-          {!isLoggedIn && <Login />}
-        </Fragment>
-      )}
-    </Router>
+    <AuthProvider value={{ logOut, token }}>
+      {isLoading ? <Loading /> : <RouteHandler isLoggedIn={isLoggedIn} />}
+    </AuthProvider>
   )
 }
 

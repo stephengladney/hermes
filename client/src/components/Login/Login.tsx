@@ -7,10 +7,8 @@ import {
   StyledLink,
   Subtitle,
 } from "./styles"
-import { useHistory } from "react-router-dom"
 
 export function Login() {
-  useHistory().push("/login")
   return (
     <BodyWrapper>
       <LoginContainer>
