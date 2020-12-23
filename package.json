@@ -1,0 +1,20 @@
+{
+  "name": "hermes",
+  "version": "1.0.0",
+  "description": "A slackbot that provides updates on in-flight work",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd client && npm run build && cd ../server && tsc && node build/app.js --trace-warnings",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephengladney/hermes.git"
+  },
+  "author": "Stephen Gladney",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stephengladney/hermes/issues"
+  },
+  "homepage": "https://github.com/stephengladney/hermes#readme"
+}

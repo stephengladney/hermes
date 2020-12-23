@@ -42,6 +42,7 @@ export const StyledLink = styled.a`
 export const StyledButton = styled.button`
   border: 0;
   color: #fff;
+  cursor: pointer;
   background-color: #9254de;
   font-size: 16px;
   line-height: 24px;
