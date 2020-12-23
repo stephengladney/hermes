@@ -4,7 +4,8 @@
   "description": "A slackbot that provides updates on in-flight work",
   "main": "index.js",
   "scripts": {
-    "start": "cd client && npm run build && cd ../server && npm install && npm start",
+    "build": "./heroku-build.sh",
+    "start": "node server/build/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,8 +18,11 @@
     "url": "https://github.com/stephengladney/hermes/issues"
   },
   "homepage": "https://github.com/stephengladney/hermes#readme",
-  "dependencies": {
-    "react-scripts": "^4.0.1",
-    "typescript": "^4.1.3"
+  "cacheDirectories": [
+    "client/node_modules",
+    "server/node_modules"
+  ],
+  "engines": {
+    "node": "14.x"
   }
 }

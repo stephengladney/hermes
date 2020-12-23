@@ -1,17 +1,15 @@
 .DS_Store
-node_modules/
+node_modules
 
 # SERVER
 
 server/build
-server/node_modules
 server/.env
 server/*.pem
 
 # CLIENT
 
 # dependencies
-client/node_modules
 client/.pnp
 client/.pnp.js
 
