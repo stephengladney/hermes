@@ -5,6 +5,7 @@ import bodyParser from "body-parser"
 import { checkforStagnants } from "./lib/jira"
 import sequelize from "./config/sequelize"
 import routes from "./routes/"
+import { resolve } from "path"
 
 const app = express()
 export const stagnantCards: [] = []
@@ -12,6 +13,7 @@ export const stagnantCards: [] = []
 sequelize.sync()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.static(resolve(__dirname, "../../client/build")))
 app.use(routes)
 
 let statusPoller = setInterval(() => {
