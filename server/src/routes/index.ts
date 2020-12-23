@@ -12,7 +12,7 @@ router.use("/webhooks", webhooksRouter)
 
 router.get("/*", (req: Request, res: Response) => {
   res.sendFile(
-    path.join(__dirname, "..", "..", "..", "client", "src", "test.html")
+    path.join(__dirname, "..", "..", "..", "client", "build", "index.html")
   )
 })
 
